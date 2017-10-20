@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha -w test.js --watch-extensions html, js, css"
   },
   "author": "Yeliz Pehlivanoglu <yeliz.isik@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "express": "^4.16.2"
   },
   "devDependencies": {
