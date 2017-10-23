@@ -19,3 +19,10 @@ $ echo 'node_modules' >> .gitignore
 This is an executable file, which starts our server. Run 
 $ chmod +x bin/www
 to make this file executable.
+
+- Express is not able to parse user submitted data to javascript code because it is missing one middleware that is not shipped with express, 
+which is the body-parser. Run following command to install:
+$ npm install body-parser --save
+Do not forget to run 
+$ npm shrinkwrap
+since we are not including our node_modules in Git repository.

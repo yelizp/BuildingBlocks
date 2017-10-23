@@ -9,6 +9,7 @@
   "author": "Yeliz Pehlivanoglu <yeliz.isik@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
     "express": "^4.16.2",
     "jquery": "^3.2.1"
