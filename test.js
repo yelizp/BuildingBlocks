@@ -67,3 +67,20 @@ describe('Creating new cities', function() {
             .expect(/springfield/i, done);
     });
 });
+
+describe('Deleting cities', function() {
+
+    before(function() {
+        redisClient.hset('cities', 'Banana', 'A tasty fruit');
+    });
+
+    after(function() {
+        redisClient.flushdb();
+    });
+
+    it('Returns a 204 status code', function(done) {
+        request(app)
+            .delete('/cities/Banana')
+            .expect(204, done);
+    });
+});

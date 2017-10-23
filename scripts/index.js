@@ -24,4 +24,15 @@ $(function() {
                 console.log(error);
             });
     }); 
+
+    $('ul').on('click', 'a[data-city]', function(event) {
+        event.preventDefault();
+
+        var target = $(event.currentTarget);
+        
+        $.ajax({type:'DELETE', url: '/cities/' + target.data('city')})
+            .done(function() {
+                target.parent('li').remove();
+            })
+    });
 });
