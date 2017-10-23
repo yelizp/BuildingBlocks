@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 var app = require('./../app');
-var defaultPort = 3000;
 
-app.listen(defaultPort, 
-    () => process.stdout.write(`Listening on port ${defaultPort}`));
+app.set('port', (process.env.PORT || 5000));
+
+app.listen(app.get('port'), 
+    () => process.stdout.write(`Listening on port ${app.get('port')}`));

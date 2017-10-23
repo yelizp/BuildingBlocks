@@ -2,12 +2,10 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var urlencode = bodyParser.urlencoded({extended: false});
+var redis = require('redis');
+var redisClient = redis.createClient();
 
-var cities = {
-    'Lotopia' : 'Lotopia is where ...', 
-    'Caspina' : 'Caspina is where ...',
-    'Indigo' : 'Indigo is where ...'
-};
+redisClient.select((process.env.NODE_ENV || 'development').length);
 
 //Static HTML files
 app.use(express.static(__dirname + '/public'));
@@ -25,13 +23,18 @@ app.use('/styles', express.static(__dirname + '/node_modules/bootstrap/dist/css'
 app.use('/fonts', express.static(__dirname + '/node_modules/bootstrap/dist/fonts'));
 
 app.get('/cities', function(request, response) {
-    response.json(Object.keys(cities)); 
+    redisClient.hkeys('cities', function(error, names) {
+        response.json(names); 
+    });
 });
 
 app.post('/cities', urlencode, function(request, response){
     var newCity = request.body;
-    cities[newCity.name] = newCity.description;
-    response.status(201).json(newCity.name);
+    //cities[newCity.name] = newCity.description;
+    redisClient.hset('cities', newCity.name, newCity.description, function(error) {
+        if(error) throw error;
+        response.status(201).json(newCity.name);
+    });
 });
 
 module.exports = app;
