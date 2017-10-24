@@ -66,6 +66,13 @@ describe('Creating new cities', function() {
             .send('name=SpringField&description=where+the+simpsons+live')
             .expect(/springfield/i, done);
     });
+
+    it('Validates city name and description', function(done) {
+        request(app)
+            .post('/cities')
+            .send('name=&description=')
+            .expect(400, done);
+    });
 });
 
 describe('Deleting cities', function() {
@@ -82,5 +89,34 @@ describe('Deleting cities', function() {
         request(app)
             .delete('/cities/Banana')
             .expect(204, done);
+    });
+});
+
+describe('Shows city info', function() {
+
+    before(function() {
+        redisClient.hset('cities', 'Banana', 'A tasty city');
+    });
+
+    after(function() {
+        redisClient.flushdb();
+    });
+
+    it('Returns 200 status code', function(done) {
+        request(app)
+            .get('/cities/Banana')
+            .expect(200, done);
+    });
+
+    it('Returns HTML format', function(done) {
+        request(app)
+            .get('/cities/Banana')
+            .expect('Content-Type', /html/i, done);
+    });
+
+    it('Returns information for given city', function(done) {
+        request(app)
+            .get('/cities/Banana')
+            .expect(/A tasty city/, done);
     });
 });

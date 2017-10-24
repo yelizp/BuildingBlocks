@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "test": "NODE_ENV=test mocha -w test.js --watch-extensions html, js, css"
+    "test": "NODE_ENV=test mocha -w app.js test.js --watch-extensions html, js, css, ejs"
   },
   "author": "Yeliz Pehlivanoglu <yeliz.isik@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "hiredis": "^0.5.0",
     "jquery": "^3.2.1",
